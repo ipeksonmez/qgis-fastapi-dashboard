@@ -35,23 +35,27 @@ class ReprojectRequest(BaseModel):
 # STORAGE SERVICE
 # -----------------------------
 class JsonStorageService:
-    @staticmethod
-    def read_json(path, default_value):
-        if os.path.exists(path):
-            with open(path, "r", encoding="utf-8") as file:
-                return json.load(file)
+    @staticmethod
+    def read_json(path, default_value):
+        if os.path.exists(path):
+            try:
+                with open(path, "r", encoding="utf-8") as file:
+                    return json.load(file)
+            except json.JSONDecodeError:
+                # Render uyku moduna geçerken dosyayı bozduysa API çökmez, sıfırdan boş döner
+                return default_value
 
-        return default_value
+        return default_value
 
-    @staticmethod
-    def write_json(path, data):
-        folder = os.path.dirname(path)
+    @staticmethod
+    def write_json(path, data):
+        folder = os.path.dirname(path)
 
-        if folder:
-            os.makedirs(folder, exist_ok=True)
+        if folder:
+            os.makedirs(folder, exist_ok=True)
 
-        with open(path, "w", encoding="utf-8") as file:
-            json.dump(data, file, indent=4, ensure_ascii=False)
+        with open(path, "w", encoding="utf-8") as file:
+            json.dump(data, file, indent=4, ensure_ascii=False)
 
 
 # -----------------------------
