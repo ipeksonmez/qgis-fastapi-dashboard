@@ -31,27 +31,7 @@ class ReprojectRequest(BaseModel):
     layer_geojson_4326: dict | None = None
 
 
-# -----------------------------
-# STORAGE SERVICE
-# -----------------------------
-class JsonStorageService:
-    @staticmethod
-    def read_json(path, default_value):
-        if os.path.exists(path):
-            with open(path, "r", encoding="utf-8") as file:
-                return json.load(file)
-
-        return default_value
-
-    @staticmethod
-    def write_json(path, data):
-        folder = os.path.dirname(path)
-
-        if folder:
-            os.makedirs(folder, exist_ok=True)
-
-        with open(path, "w", encoding="utf-8") as file:
-            json.dump(data, file, indent=4, ensure_ascii=False)
+https://github.com/ipeksonmez/qgis-fastapi-dashboard/blob/main/main.py
 
 
 # -----------------------------
